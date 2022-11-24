@@ -45,3 +45,11 @@ def get_category_by_id(category):
 def update_category_by_id(category, user, data):
     category.update(**data)
     return jsonify(UpdateCategorySchema().dump(category)), 200
+
+
+@category_blueprint.route('/<category_id>', methods=['DELETE'])
+@token_required
+@validate_and_load_category
+def delete_category_by_id(category, user):
+    category.delete()
+    return jsonify({}), 200
